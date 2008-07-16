@@ -15,13 +15,25 @@ BEGIN {
 
 use constant PI => 4 * atan2(1, 1);
 
+sub degrees_to_radians {
+    my ($self, $degs) = @_;
+
+    return $degs * (PI / 180);
+}
+
+sub radians_to_degrees {
+    my ($self, $rads) = @_;
+
+    return $rads * (180 / PI);
+}
+
 1;
 
 __END__
 
 =head1 NAME
 
-Geometry::Primitive::Polygon
+Geometry::Primitive::Util
 
 =head1 DESCRIPTION
 
@@ -43,7 +55,17 @@ The value of pi.
 
 =back
 
+=head1 METHODS
+
 =over 4
+
+=item I<degrees_to_radians>
+
+Convert degrees to radians
+
+=item I<radians_to_degrees>
+
+Convert radians to degrees
 
 =back
 
