@@ -3,7 +3,7 @@ use Moose;
 
 extends 'Geometry::Primitive';
 
-with qw(Geometry::Primitive::Equal);
+with qw(Geometry::Primitive::Equal MooseX::Clone);
 
 has 'x' => ( is => 'rw', isa => 'Num' );
 has 'y' => ( is => 'rw', isa => 'Num' );
@@ -19,6 +19,8 @@ sub to_string {
 
     return $self->x.','.$self->y;
 }
+
+__PACKAGE__->meta->make_immutable;
 
 no Moose;
 1;

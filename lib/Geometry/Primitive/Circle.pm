@@ -1,13 +1,18 @@
-package Geometry::Primitive::Arc;
+package Geometry::Primitive::Circle;
 use Moose;
 
 use MooseX::AttributeHelpers;
 
-extends 'Geometry::Primitive';
+extends 'Geometry::Primitive::Arc';
 
-has 'angle_start' => ( is => 'rw', isa => 'Num' );
-has 'angle_end' => ( is => 'rw', isa => 'Num' );
-has 'radius' => ( is => 'rw', isa => 'Num' );
+has '+angle_start' => ( default => sub { 0 } );
+has '+angle_end' => ( default => sub { 360 } );
+
+sub diameter {
+    my ($self) = @_;
+
+    return $self->radius * 2;
+}
 
 __PACKAGE__->meta->make_immutable;
 
@@ -18,21 +23,20 @@ __END__
 
 =head1 NAME
 
-Geometry::Primitive::Arc
+Geometry::Primitive::Circle
 
 =head1 DESCRIPTION
 
-Geometry::Primitive::Arc represents a closed segment of a curve.
+Geometry::Primitive::Circle represents a closed arc
 
 =head1 SYNOPSIS
 
-  use Geometry::Primitive::Arc;
+  use Geometry::Primitive::Circle;
 
-  my $arc = Geometry::Primitive::Arc->new(
-      angle_start => 45,
-      angle_end => 65,
+  my $circle = Geometry::Primitive::Circle->new(
       radius => 15
   );
+  print $circle->diameter;
 
 =head1 METHODS
 
@@ -50,17 +54,13 @@ Creates a new Geometry::Primitive::Arc
 
 =over 4
 
-=item I<angle_start>
+=item I<diameter>
 
-The starting angle for this arc.
-
-=item I<angle_end>
-
-The ending angle for this arc.
+Returns the diameter of this circle
 
 =item I<radius>
 
-Returns the radius of the arc.
+Set/Get the radius of this circle.
 
 =back
 
