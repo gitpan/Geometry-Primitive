@@ -5,25 +5,32 @@ use MooseX::AttributeHelpers;
 
 extends 'Geometry::Primitive';
 
-with 'Geometry::Primitive::Shape';
+with qw(Geometry::Primitive::Shape MooseX::Clone);
 
 has 'points' => (
     metaclass => 'Collection::Array',
     is => 'rw',
     isa => 'ArrayRef[Geometry::Primitive::Point]',
+    traits => [qw(Clone)],
     default => sub { [] },
     provides => {
         'push' => 'add_point',
         'clear' => 'clear_points',
         'count' => 'count_points',
-        'get' => 'get_point_at'
+        'get' => 'get_point'
     }
 );
 
-sub get_points {
+sub point_end {
     my ($self) = @_;
 
-    return $self->points();
+    return $self->get_point($self->count_points - 1);
+}
+
+sub point_start {
+    my ($self) = @_;
+
+    return $self->get_point(0);
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -84,9 +91,17 @@ Returns the number of points that bound this polygon.
 
 Returns all the points in this Polygon.  Required by Shape.
 
-=item I<get_point_at>
+=item I<get_point>
 
 Returns the point at the specified offset.
+
+=item I<point_end>
+
+Get the end point.  Provided for Shape role.
+
+=item I<point_start>
+
+Get the start point.  Provided for Shape role.
 
 =back
 
