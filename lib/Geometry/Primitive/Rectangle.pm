@@ -33,8 +33,14 @@ sub get_points {
     push(@points, Geometry::Primitive::Point->new(
         x => $self->origin->x + $self->width, y => $self->origin->y + $self->height
     ));
-
     return \@points
+}
+
+sub scale {
+    my ($self, $amount) = @_;
+
+    $self->width($self->width * $amount);
+    $self->height($self->height * $amount);
 }
 
 sub point_end {
@@ -101,6 +107,10 @@ Get the end point.  Returns the origin. Provided for Shape role.
 =item I<point_start>
 
 Get the start point.  Returns the origin.  Provided for Shape role.
+
+=item I<scale ($amount)>
+
+Scales the hieght and width of this rectangle by the amount specified.
 
 =item I<width>
 

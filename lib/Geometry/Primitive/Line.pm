@@ -35,6 +35,31 @@ sub contains_point {
     return $expy == $point->y;
 }
 
+# Don't know how to do this atm.
+sub scale { }
+
+sub is_parallel {
+    my ($self, $line) = @_;
+
+    return $line->slope == $self->slope;
+}
+
+sub is_perpendicular {
+    my ($self, $line) = @_;
+
+    my $slope = $self->slope;
+
+    # Deal with horizontal and vertical lines
+    if(!defined($slope)) {
+        return $line->slope == 0;
+    }
+    if($slope == 0) {
+        return !defined($line->slope);
+    }
+
+    return $line->slope == (-1 / $self->slope);
+}
+
 sub length {
     my ($self) = @_;
 
@@ -53,8 +78,16 @@ sub point_start {
 sub slope {
     my ($self) = @_;
 
-    return ($self->end->x - $self->start->x)
-        / ($self->end->y - $self->start->y);
+    my $end = $self->end;
+    my $start = $self->start;
+    my $x = $end->x - $start->x;
+    my $y = $end->y - $start->y;
+
+    if($x == 0) {
+        return undef;
+    }
+
+    return $y / $x;
 }
 
 sub to_string {
@@ -117,6 +150,18 @@ object or an x y pair.
 
 Set/Get the end point of the line.
 
+=item I<grow>
+
+Does nothing, as I'm not show how.  Patches or hints welcome.
+
+=item I<is_parallel ($other_line)>
+
+Returns true if the supplied line is parallel to this one.
+
+=item I<is_perpendicular ($other_line)>
+
+Returns true if the supplied line is perpendicular to this one.
+
 =item I<length>
 
 Get the length of the line.
@@ -128,6 +173,10 @@ Get the end point.  Provided for Shape role.
 =item I<point_start>
 
 Get the start point.  Provided for Shape role.
+
+=item I<scale>
+
+Does nothing at the moment.
 
 =item I<slope>
 

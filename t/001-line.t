@@ -1,4 +1,4 @@
-use Test::More tests => 9;
+use Test::More tests => 14;
 
 BEGIN {
     use_ok('Geometry::Primitive::Point');
@@ -19,3 +19,28 @@ cmp_ok($line->y_intercept, '==', 1, 'y_intercept');
 
 ok($line->contains_point(-2, -1), 'contains_point');
 ok(!$line->contains_point(-1, -1), 'contains_point (wrong)');
+
+my $vert = Geometry::Primitive::Line->new(
+    start => Geometry::Primitive::Point->new( x => 0, y => 0 ),
+    end => Geometry::Primitive::Point->new( x => 0, y => 5 ),
+);
+ok(!defined($vert->slope), 'slope of vertical line');
+
+my $horiz = Geometry::Primitive::Line->new(
+    start => Geometry::Primitive::Point->new( x => 0, y => 0 ),
+    end => Geometry::Primitive::Point->new( x => 5, y => 0 ),
+);
+cmp_ok($horiz->slope, '==', 0, 'slope of horizontal line');
+ok($horiz->is_perpendicular($vert), 'vert/horiz perpendicular');
+ok($vert->is_perpendicular($horiz), 'horiz/vert perpendicular');
+
+my $line1 = Geometry::Primitive::Line->new(
+    start => Geometry::Primitive::Point->new( x => 0, y => 1 ),
+    end => Geometry::Primitive::Point->new( x => 1, y => 0 ),
+);
+my $line2 = Geometry::Primitive::Line->new(
+    start => Geometry::Primitive::Point->new( x => 0, y => 0 ),
+    end => Geometry::Primitive::Point->new( x => 1, y => 1 ),
+);
+ok($line1->is_perpendicular($line2), 'perpendicular');
+

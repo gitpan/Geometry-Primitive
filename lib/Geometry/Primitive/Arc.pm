@@ -24,12 +24,16 @@ __PACKAGE__->meta->make_immutable;
 sub get_point_at_angle {
     my ($self, $angle) = @_;
 
-    return undef if(($angle < $self->angle_start) || ($angle > $self->angle_end));
-
     return Geometry::Primitive::Point->new(
         x => $self->origin->x + ($self->radius * cos($angle)),
         y => $self->origin->y + ($self->radius * sin($angle))
     );
+}
+
+sub scale {
+    my ($self, $amount) = @_;
+
+    $self->radius($self->radius * $amount);
 }
 
 sub length {
@@ -105,6 +109,10 @@ Returns the length of this arc.
 
 Given angle in radians returns the point at that angle on this arc.  Returns
 undef if the angle falls outside this arc's range.
+
+=item I<scale ($amount)>
+
+Increases the radius by multiplying it by the supplied amount.
 
 =item I<point_end>
 

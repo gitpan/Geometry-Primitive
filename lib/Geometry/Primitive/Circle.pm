@@ -3,7 +3,7 @@ use Moose;
 
 use MooseX::AttributeHelpers;
 
-use Geometry::Primitive::Util qw(PI);
+use Math::Trig;
 
 extends 'Geometry::Primitive::Arc';
 
@@ -12,13 +12,13 @@ has '+angle_end' => ( default => sub { 360 } );
 
 sub area {
     my ($self) = @_;
-    return $self->radius**2 * PI;
+    return $self->radius**2 * pi;
 };
 
 sub circumference {
     my ($self) = @_;
 
-    return $self->diameter * PI;
+    return $self->diameter * pi;
 }
 
 sub diameter {
@@ -26,6 +26,14 @@ sub diameter {
 
     return $self->radius * 2;
 }
+
+override('scale', sub {
+    my ($self, $amount) = @_;
+
+    return Geometry::Primitive::Circle->new(
+        radius => $self->radius * $amount
+    );
+});
 
 __PACKAGE__->meta->make_immutable;
 
@@ -78,6 +86,10 @@ Returns the circumference of this circle.
 =item I<diameter>
 
 Returns the diameter of this circle
+
+=item I<scale ($amount)>
+
+Returns a new circle whose radius is $amount times bigger than this one.
 
 =item I<origin>
 
