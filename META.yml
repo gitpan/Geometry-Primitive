@@ -22,4 +22,4 @@ requires:
   MooseX::AttributeHelpers: 0.13
   MooseX::Clone: 0.03
   MooseX::Storage: 0.14
-version: 0.11
+version: 0.12
