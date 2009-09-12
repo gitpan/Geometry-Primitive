@@ -1,8 +1,10 @@
 package Geometry::Primitive;
 use Moose;
 
-our $VERSION = '0.16';
+our $VERSION = '0.17';
 our $AUTHORITY = 'cpan:GPHAT';
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__
