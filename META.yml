@@ -20,10 +20,11 @@ no_index:
     - t
 requires:
   Check::ISA: 0.04
+  JSON::Any: 1.22
   Math::Complex: 1.56
   Moose: 0.92
   MooseX::Clone: 0.04
   MooseX::Storage: 0.17
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.18
+version: 0.19
