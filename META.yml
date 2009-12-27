@@ -4,6 +4,7 @@ author:
   - 'Cory Watson <gphat@cpan.org>'
 build_requires:
   ExtUtils::MakeMaker: 6.42
+  JSON::Any: 1.22
   Test::More: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.42
@@ -20,11 +21,10 @@ no_index:
     - t
 requires:
   Check::ISA: 0.04
-  JSON::Any: 1.22
   Math::Complex: 1.56
   Moose: 0.92
   MooseX::Clone: 0.04
-  MooseX::Storage: 0.17
+  MooseX::Storage: 0.23
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.19
+version: 0.20
