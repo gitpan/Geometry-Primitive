@@ -1,4 +1,4 @@
-package Geometry::Primitive::Point;
+package Geometry::Primitive::Dimension;
 use Moose;
 use Moose::Util::TypeConstraints;
 use MooseX::Storage;
@@ -7,29 +7,29 @@ with qw(Geometry::Primitive::Equal MooseX::Clone MooseX::Storage::Deferred);
 
 use overload ('""' => 'to_string');
 
-has 'x' => (
+has 'height' => (
     is => 'rw',
     isa => 'Num'
 );
-has 'y' => (
+has 'width' => (
     is => 'rw',
     isa => 'Num'
 );
 
-coerce 'Geometry::Primitive::Point'
+coerce 'Geometry::Primitive::Dimension'
     => from 'ArrayRef'
-        => via { Geometry::Primitive::Point->new(x => $_->[0], y => $_->[1]) };
+        => via { Geometry::Primitive::Dimension->new(width => $_->[0], height => $_->[1]) };
 
 sub equal_to {
     my ($self, $other) = @_;
 
-    return (($self->x == $other->x) && $self->y == $other->y);
+    return (($self->width == $other->width) && $self->height == $other->height);
 }
 
 sub to_string {
     my ($self) = @_;
 
-    return $self->x.','.$self->y;
+    return $self->width.'x'.$self->height;
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -39,27 +39,27 @@ no Moose;
 
 =head1 NAME
 
-Geometry::Primitive::Point - An XY coordinate
+Geometry::Primitive::Dimension - A width and height
 
 =head1 DESCRIPTION
 
-Geometry::Primitive::Point represents a location in two dimensional space.
+Geometry::Primitive::Dimension encapsulates a height and width
 
 =head1 SYNOPSIS
 
-  use Geometry::Primitive::Point;
+  use Geometry::Primitive::Dimension;
 
-  my $point = Geometry::Primitive::Point->new({ x => 2, y => 0 });
+  my $point = Geometry::Primitive::Dimeions->new(width => 100, height => 100);
 
 =head1 ATTRIBUTES
 
-=head2 x
+=head2 height
 
-Set/Get the X value.
+Set/Get the height value.
 
-=head2 y
+=head2 width
 
-Set/Get the Y value.
+Set/Get the width value.
 
 =head1 METHODS
 
@@ -69,11 +69,11 @@ Creates a new Geometry::Primitive::Point.
 
 =head2 equal_to
 
-Compares this point to another.
+Compares this dimesion to another.
 
 =head2 to_string
 
-Return this point as a string $x,$y
+Return this dimesion as a string $widthx$height
 
 =head1 AUTHOR
 
